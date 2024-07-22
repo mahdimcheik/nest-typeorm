@@ -24,8 +24,6 @@ export class User {
   @OneToOne(() => Profile) // the owner
   @JoinColumn()
   profile: Profile;
-  @OneToMany(() => Post, (post) => post.user, {
-    cascade: ['insert', 'update', 'remove'],
-  })
+  @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 }

@@ -22,4 +22,21 @@ export class PostService {
     const newPost = this.postRepository.create({ ...createPost, user });
     return await this.postRepository.save(newPost);
   }
+
+  async deletePost(id: number, userId: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new HttpException('User Not found ', HttpStatus.NOT_FOUND);
+    }
+    const post = await this.postRepository.findOne({
+      where: { id },
+    });
+    if (!post) {
+      throw new HttpException('Post Not found ', HttpStatus.NOT_FOUND);
+    }
+    // this.userRepository.save(user);
+    return this.postRepository.delete(id);
+  }
 }
